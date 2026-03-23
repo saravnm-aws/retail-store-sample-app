@@ -11,9 +11,20 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Deploy to EKS
+      - name: Install Helm
+        uses: azure/setup-helm@v4
+
+      - name: Install Helmfile
         run: |
-          kubectl apply -f https://github.com/aws-containers/retail-store-sample-app/releases/latest/download/kubernetes.yaml
+          curl -fsSL -o helmfile https://github.com/helmfile/helmfile/releases/latest/download/helmfile_linux_amd64
+          chmod +x helmfile
+          sudo mv helmfile /usr/local/bin/
+
+      - name: Generate and deploy manifests
+        run: |
+          export IMAGE_TAG=1.4.0
+          export LOAD_BALANCER=yes
+          helmfile template -f src/app/helmfile.yaml --skip-tests | kubectl apply -f -
 
       - name: Wait for deployments
         run: |
