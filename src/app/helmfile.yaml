@@ -68,7 +68,7 @@ releases:
       - templates/ingress.yaml.gotmpl
       - app:
           endpoints:
-            catalog: http://catalog
+            catalog: http://catalog-svc
             carts: http://carts
             checkout: http://checkout
             orders: http://orders
