@@ -28,6 +28,10 @@ jobs:
           export LOAD_BALANCER=yes
           helmfile template -f src/app/helmfile.yaml --skip-tests | kubectl apply -f -
 
+      - name: Rollout restart deployments
+        run: |
+          kubectl rollout restart deployment -n default
+
       - name: Wait for deployments
         run: |
           kubectl wait --for=condition=available deployments --all -n default --timeout=300s
