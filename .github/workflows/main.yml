@@ -16,9 +16,11 @@ jobs:
 
       - name: Install Helmfile
         run: |
-          curl -fsSL -o helmfile https://github.com/helmfile/helmfile/releases/latest/download/helmfile_linux_amd64
+          curl -fsSL -o helmfile.tar.gz https://github.com/helmfile/helmfile/releases/download/v1.4.2/helmfile_1.4.2_linux_amd64.tar.gz
+          tar xzf helmfile.tar.gz helmfile
           chmod +x helmfile
           sudo mv helmfile /usr/local/bin/
+          rm helmfile.tar.gz
 
       - name: Generate and deploy manifests
         run: |
