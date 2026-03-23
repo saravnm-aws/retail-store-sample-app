@@ -4,6 +4,11 @@ image:
   tag: dev
 {{end}}
 
+{{if not (env "TILT_MODE") }}
+image:
+  tag: 0.99.0-broken
+{{end}}
+
 {{if env "RANDOM_PASSWORD" }}
 mysql:
   secret:
